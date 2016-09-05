@@ -27,9 +27,10 @@ public class BoidVelocity {
     }
 
     public double getFi() {
-        if (fi > 2 * Math.PI) {
+        while (fi > 2 * Math.PI) {
             fi = fi - 2 * Math.PI;
-        } else if (fi < 0) {
+        }
+        while (fi < 0) {
             fi = fi + 2 * Math.PI;
         }
         return fi;
