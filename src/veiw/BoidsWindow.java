@@ -54,7 +54,7 @@ public class BoidsWindow extends JFrame {
         map.addWall(new Straight(300, 100, 1000, 100));
         map.addWall(new Straight(300, 600, 1000, 600));        
         Boid b;
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 150; i++) {
             b = new Boid(map, new Point2D.Double(
                     Math.random() * map.getWidth(),
                     Math.random() * map.getHeight()
