@@ -218,6 +218,9 @@ public class BoidKeyListener implements KeyListener {
         } else if (key == 'Z') {
             model.getMap().removeWall();
         }
+        if (key != 'z') {
+            space.setWallDrawingmode(false);
+        }
         space.setActiveMenu(keyCharToMenuNumber(key));
     }
 

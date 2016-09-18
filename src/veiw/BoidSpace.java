@@ -384,7 +384,6 @@ public class BoidSpace extends JPanel {
             drawNeighbourhoodDist(g, b);
             drawPrivateDist(g, b);
             drawBoidToMap(g, b, b.getActualPosition(), b.getColor());
-            drawTrajecotry(g, b, b.getColor());
         }
 
         if (model.isObjectScarry()) {
