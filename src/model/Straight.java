@@ -19,6 +19,7 @@ public class Straight {
     private double[] normalVector;
     private double[] directionVector;
     private boolean isVertical = false;
+    private boolean isHorisontal = false;
 
     public Straight(double p1x, double p1y, double p2x, double p2y) {
         this.p1x = p1x;
@@ -64,6 +65,9 @@ public class Straight {
         } else {
             m = (p2y - p1y) / (p2x - p1x);
             b = -1.0 * m * p1x + p1y;
+            if (Double.compare(p1y, p2y) == 0) {
+                isHorisontal = true;
+            }
         }
         normalVector[0] = p2y - p1y;
         normalVector[1] = p1x - p2x;
@@ -171,6 +175,30 @@ public class Straight {
 
     public double getLength() {
         return length;
+    }
+
+    public double getLinePointY(double X) {
+        double out;
+        if (isVertical) {
+            out = 0;
+        } else if (isHorisontal) {
+            out = p1y;
+        } else {
+            out = m * X + b;
+        }
+        return out;
+    }
+
+    public double getLinePointX(double Y) {
+        double out;
+        if (isVertical) {
+            out = p1x;
+        } else if (isHorisontal) {
+            out = 0;
+        } else {
+            out = (Y - b) / m;
+        }
+        return out;
     }
 
     public double getPitchAngle(Straight other) {
