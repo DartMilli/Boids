@@ -43,10 +43,10 @@ public class BoidsWindow extends JFrame {
     }
 
     private void intiWallsAndBoids() {
-        int testMode = 0, initialBoidNumber = 1;
+        int testMode = 4, initialBoidNumber = 1;
         Map map = model.getMap();
         switch (testMode) {            
-            case 4:
+            
             case 3:
                 initialBoidNumber = 150;
             case 1:
@@ -54,7 +54,9 @@ public class BoidsWindow extends JFrame {
                 map.addWall(new Straight(1100, 600, 1100, 100));
                 map.addWall(new Straight(300, 100, 1000, 100));
                 map.addWall(new Straight(1000, 600, 300, 600));
-                break;          
+                break;
+            case 4:
+                initialBoidNumber = 150;
             case 2:
                 map.addWall(new Straight(200, 300, 600, 100));
                 map.addWall(new Straight(700, 100, 1100, 300));
