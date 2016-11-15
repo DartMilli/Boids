@@ -101,10 +101,17 @@ public class Straight {
             } else if (isVertical) {
                 out[0] = a;
                 out[1] = other.getM() * a + other.getB();
+            } else if (other.isHorisontal) {
+                out[0] = getLinePointX(other.getP1().y);
+                out[1] = other.getP1().y;
+            } else if (isHorisontal) {
+                out[0] = other.getLinePointX(p1y);
+                out[1] = p1y;
             } else {
                 out[0] = (other.getB() - b) / (m - other.getM());
                 out[1] = m * out[0] + b;
             }
+
             double p3x = other.getP1().x;
             double p3y = other.getP1().y;
             double p4x = other.getP2().x;
@@ -213,7 +220,7 @@ public class Straight {
                 / (Math.sqrt(Math.pow(x1, 2) + Math.pow(y1, 2))
                 * Math.sqrt(Math.pow(x2, 2) + Math.pow(y2, 2)))
         );
-        out = out > Math.PI / 2.0 ? Math.PI - out : out;
+        //out = out > Math.PI / 2.0 ? Math.PI - out : out;
         return out;
     }
 

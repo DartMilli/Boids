@@ -233,12 +233,9 @@ public class Boid {
     }
 
     private void boidPositionWallCorrection() {
-        double newfi, newl, newx, newy, pitchAngle;
-        int wayDirectionFactor;
+        double newfi, newl, newx, newy;
         Straight way, wall;
         BoidVelocity wallNormalVector = new BoidVelocity();
-        BoidVelocity wayNormalVector = new BoidVelocity();
-        BoidVelocity wayDirectionVector = new BoidVelocity();
         for (int i = 0; i < map.getWalls().length; i++) {
             way = new Straight(pastPositions[0], actualPosition);
             wall = map.getWalls()[i];
@@ -246,108 +243,14 @@ public class Boid {
                 wallNormalVector.setKoordinates(
                         wall.getNormalVector()[0],
                         wall.getNormalVector()[1]);
-                wayNormalVector.setKoordinates(
-                        way.getNormalVector()[0],
-                        way.getNormalVector()[1]);
-                wayDirectionVector.setKoordinates(
-                        way.getDirectionVector()[0],
-                        way.getDirectionVector()[1]);
-                pitchAngle = way.getPitchAngle(wall);
-                if (wallNormalVector.getFi() > 0
-                        && wallNormalVector.getFi() <= Math.PI / 2.0) {//horisontal up 90.0
-                    if (wayNormalVector.getFi() > 0
-                            && wayNormalVector.getFi() <= Math.PI / 2.0) {//from right down                        
-                        newfi = wallNormalVector.getFi() + Math.PI;
-                    } else if (wayNormalVector.getFi() > Math.PI / 2.0
-                            && wayNormalVector.getFi() <= Math.PI) {//from right up                        
-                        newfi = wallNormalVector.getFi();
-                    } else if (wayNormalVector.getFi() > Math.PI
-                            && wayNormalVector.getFi() <= Math.PI * 3.0 / 2.0) {//from left up                        
-                        newfi = wallNormalVector.getFi();
-                    } else {//from left down                       
-                        newfi = wallNormalVector.getFi() + Math.PI;
-                    }
-                    if (Math.signum(wayDirectionVector.getyValue())
-                            == Math.signum(wallNormalVector.getyValue())) {
-                        wayDirectionFactor = -1;
-                    } else {
-                        wayDirectionFactor = 1;
-                    }
-                    newfi = 2.0 * Math.PI - velocity.getFi();
-                } else if (wallNormalVector.getFi() > Math.PI / 2.0
-                        && wallNormalVector.getFi() <= Math.PI) {//vertical right 180.0                    
-                    if (wayNormalVector.getFi() > 0
-                            && wayNormalVector.getFi() <= Math.PI / 2.0) {//from right down                        
-                        newfi = wallNormalVector.getFi() + Math.PI;
-                    } else if (wayNormalVector.getFi() > Math.PI / 2.0
-                            && wayNormalVector.getFi() <= Math.PI) {//from right up                        
-                        newfi = wallNormalVector.getFi() + Math.PI;
-                    } else if (wayNormalVector.getFi() > Math.PI
-                            && wayNormalVector.getFi() <= Math.PI * 3.0 / 2.0) {//from left up                    
-                        newfi = wallNormalVector.getFi();
-                    } else {//from left down                     
-                        newfi = wallNormalVector.getFi();
-                    }
-                    if (Math.signum(wayDirectionVector.getxValue())
-                            == Math.signum(wallNormalVector.getxValue())) {
-                        wayDirectionFactor = -1;
-                    } else {
-                        wayDirectionFactor = 1;
-                    }
-                    newfi = Math.PI - velocity.getFi();
-                } else if (wallNormalVector.getFi() > Math.PI
-                        && wallNormalVector.getFi() <= Math.PI * 3.0 / 2.0) {//horisontal down 270.0                    
-                    if (wayNormalVector.getFi() > 0
-                            && wayNormalVector.getFi() <= Math.PI / 2.0) {//from right down                       
-                        newfi = wallNormalVector.getFi();
-                    } else if (wayNormalVector.getFi() > Math.PI / 2.0
-                            && wayNormalVector.getFi() <= Math.PI) {//from right up                     
-                        newfi = wallNormalVector.getFi() + Math.PI;
-                    } else if (wayNormalVector.getFi() > Math.PI
-                            && wayNormalVector.getFi() <= Math.PI * 3.0 / 2.0) {//from left up                   
-                        newfi = wallNormalVector.getFi() + Math.PI;
-                    } else {//from left down
-                        newfi = wallNormalVector.getFi();
-                    }
-                    if (Math.signum(wayDirectionVector.getyValue())
-                            == Math.signum(wallNormalVector.getyValue())) {
-                        wayDirectionFactor = -1;
-                    } else {
-                        wayDirectionFactor = 1;
-                    }
-                    newfi = 2.0 * Math.PI - velocity.getFi();
-                } else /*if (wallNormalVector.getFi() > Math.PI * 3.0 / 2.0
-                 && (wallNormalVector.getFi() < Math.PI * 2.0
-                 || wallNormalVector.getFi() == 0.0))*/ {//vertical left 0.0                    
-                    if (wayNormalVector.getFi() > 0
-                            && wayNormalVector.getFi() <= Math.PI / 2.0) {//from right down                     
-                        newfi = wallNormalVector.getFi();
-                    } else if (wayNormalVector.getFi() > Math.PI / 2.0
-                            && wayNormalVector.getFi() <= Math.PI) {//from right up                 
-                        newfi = wallNormalVector.getFi();
-                    } else if (wayNormalVector.getFi() > Math.PI
-                            && wayNormalVector.getFi() <= Math.PI * 3.0 / 2.0) {//from left up          
-                        newfi = wallNormalVector.getFi() + Math.PI;
-                    } else {//from left down
-                        newfi = wallNormalVector.getFi() + Math.PI;
-                    }
-                    if (Math.signum(wayDirectionVector.getxValue())
-                            == Math.signum(wallNormalVector.getxValue())) {
-                        wayDirectionFactor = -1;
-                    } else {
-                        wayDirectionFactor = 1;
-                    }
-                    newfi = Math.PI - velocity.getFi();
-                }
+                newfi = wallNormalVector.getFi() + Math.pow(-1, (int) (Math.random() * (2 - 1 + 1)) + 1) * (Math.PI / 2.0);
                 if (Double.compare(pastPositions[0].x, pastPositions[5].x) == 0
                         && Double.compare(pastPositions[0].y, pastPositions[5].y) == 0) {
-                    newfi += Math.pow(-1, (int) (Math.random() * 2 + 1)) * (Math.PI / 2.0 + Math.random() * Math.PI / 2);
-                }
+                    //newfi += Math.pow(-1, (int) (Math.random() * 2 + 1)) * (Math.PI / 2.0 + Math.random() * Math.PI / 2);
+                }                
                 newl = velocity.getLength();
-                newx = pastPositions[0].x
-                        + wayDirectionFactor * wallNormalVector.getxValue() * maximumSpeed;
-                newy = pastPositions[0].y
-                        + wayDirectionFactor * wallNormalVector.getyValue() * maximumSpeed;
+                newx = pastPositions[0].x;
+                newy = pastPositions[0].y;
                 velocity.setPolarKoordinates(newfi, newl);
                 actualPosition.setLocation(newx, newy);
             }
