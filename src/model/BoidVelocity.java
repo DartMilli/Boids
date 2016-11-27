@@ -54,7 +54,7 @@ public class BoidVelocity {
     public void setKoordinates(double xValue, double yValue) {
         this.xValue = xValue;
         this.yValue = yValue;
-        this.length = Math.pow((Math.pow(xValue, 2.0) + Math.pow(yValue, 2.0)), 0.5);
+        this.length = Math.pow(Math.pow(xValue, 2.0) + Math.pow(yValue, 2.0), 0.5);
         //http://hu.wikipedia.org/wiki/Pol%C3%A1rkoordin%C3%A1ta-rendszer
         if (xValue > 0.0) {
             fi = Math.atan(yValue / xValue);
@@ -70,14 +70,17 @@ public class BoidVelocity {
     }
 
     public void setPolarKoordinates(double fi, double length) {
+        double calcFi;
         do {
             if (fi >= Math.PI) {
-                fi -= Math.PI * 2.0;
+                calcFi = fi - Math.PI * 2.0;
             } else if (fi <= -1.0 * Math.PI) {
-                fi += Math.PI * 2.0;
+                calcFi = fi + Math.PI * 2.0;
+            } else {
+                calcFi = fi;
             }
         } while (fi > Math.PI && fi < -1.0 * Math.PI);
-        this.fi = fi;
+        this.fi = calcFi;
         this.length = length;
         this.xValue = length * Math.cos(fi);
         this.yValue = length * Math.sin(fi);

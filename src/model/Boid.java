@@ -85,7 +85,7 @@ public class Boid {
                 vx += veloctyComponents[i].getxValue();
                 vy += veloctyComponents[i].getyValue();
                 length += veloctyComponents[i].getLength();
-                if (Double.doubleToRawLongBits(veloctyComponents[i].getLength()) != 0.0) {
+                if (Double.doubleToRawLongBits(veloctyComponents[i].getLength()) != 0) {
                     pieces++;
                 }
             }
@@ -96,7 +96,7 @@ public class Boid {
             length = length / pieces;
             theoreticalSpeed.setPolarKoordinates(fi, length);
         }
-        if (Double.doubleToRawLongBits(length) == 0.0) {
+        if (Double.doubleToRawLongBits(length) == 0) {
             fi = theoreticalSpeed.getFi();
             length = maximumSpeed;
             theoreticalSpeed.setPolarKoordinates(fi, length);

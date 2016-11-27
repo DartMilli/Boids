@@ -188,7 +188,7 @@ public class StringMenu {
         return output.toString();
     }
 
-    private int maximumLength(String[] in) {
+    private static int maximumLength(String[] in) {
         int temp, max = 0;
         for (int i = 0; i < in.length; i++) {
             if (in[i].startsWith("Neighbours:")) {

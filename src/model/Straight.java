@@ -31,25 +31,25 @@ public class Straight {
         calculate();
     }
 
-    public Straight(Point2D.Double P1, Point2D.Double P2) {
-        this.p1x = P1.x;
-        this.p2x = P2.x;
-        this.p1y = P1.y;
-        this.p2y = P2.y;
+    public Straight(Point2D.Double p1, Point2D.Double p2) {
+        this.p1x = p1.x;
+        this.p2x = p2.x;
+        this.p1y = p1.y;
+        this.p2y = p2.y;
         normalVector = new double[2];
         directionVector = new double[2];
         calculate();
     }
 
-    public Straight(Point2D.Double P1, double[] Vector, boolean isNormalVector) {
-        this.p1x = P1.x;
-        this.p1y = P1.y;
+    public Straight(Point2D.Double p1, double[] vector, boolean isNormalVector) {
+        this.p1x = p1.x;
+        this.p1y = p1.y;
         if (isNormalVector) {
-            this.p2x = p1x - Vector[1];
-            this.p2y = Vector[0] + p1y;
+            this.p2x = p1x - vector[1];
+            this.p2y = vector[0] + p1y;
         } else {
-            this.p2x = Vector[0] + p1x;
-            this.p2y = Vector[0] + p1y;
+            this.p2x = vector[0] + p1x;
+            this.p2y = vector[0] + p1y;
         }
         normalVector = new double[2];
         directionVector = new double[2];
@@ -80,15 +80,15 @@ public class Straight {
         }
     }
 
-    public void setP1(Point2D.Double P1) {
-        p1x = P1.x;
-        p1y = P1.y;
+    public void setP1(Point2D.Double p1) {
+        p1x = p1.x;
+        p1y = p1.y;
         calculate();
     }
 
-    public void setP2(Point2D.Double P2) {
-        p2x = P2.x;
-        p2y = P2.y;
+    public void setP2(Point2D.Double p2) {
+        p2x = p2.x;
+        p2y = p2.y;
         calculate();
     }
 
@@ -163,13 +163,11 @@ public class Straight {
     }
 
     public Point2D.Double getP1() {
-        Point2D.Double out = new Point2D.Double(p1x, p1y);
-        return out;
+        return new Point2D.Double(p1x, p1y);
     }
 
     public Point2D.Double getP2() {
-        Point2D.Double out = new Point2D.Double(p2x, p2y);
-        return out;
+        return new Point2D.Double(p2x, p2y);
     }
 
     public double[] getNormalVector() {
@@ -184,26 +182,26 @@ public class Straight {
         return length;
     }
 
-    public double getLinePointY(double X) {
+    public double getLinePointY(double x) {
         double out;
         if (isVertical) {
             out = 0;
         } else if (isHorisontal) {
             out = p1y;
         } else {
-            out = m * X + b;
+            out = m * x + b;
         }
         return out;
     }
 
-    public double getLinePointX(double Y) {
+    public double getLinePointX(double y) {
         double out;
         if (isVertical) {
             out = p1x;
         } else if (isHorisontal) {
             out = 0;
         } else {
-            out = (Y - b) / m;
+            out = (y - b) / m;
         }
         return out;
     }
@@ -220,75 +218,6 @@ public class Straight {
                 / (Math.sqrt(Math.pow(x1, 2) + Math.pow(y1, 2))
                 * Math.sqrt(Math.pow(x2, 2) + Math.pow(y2, 2)))
         );
-        //out = out > Math.PI / 2.0 ? Math.PI - out : out;
         return out;
-    }
-
-    public static void main(String[] args) {
-        Straight e = new Straight(2, 6, 7, 2);
-        Straight f = new Straight(4, 1, 4, 9);
-        Straight g = new Straight(2, 8, 6, 7);
-        Straight h = new Straight(1, 3, 7, 3);
-        Straight j = new Straight(9, 3, 13, 5);
-        System.out.println("e meredekség: " + e.getM());
-        System.out.println("f meredekség: " + f.getM());
-        System.out.println("g meredekség: " + g.getM());
-        System.out.println("h meredekség: " + h.getM());
-        System.out.println("e metszet: " + e.getB());
-        System.out.println("f metszet: " + f.getB());
-        System.out.println("g metszet: " + g.getB());
-        System.out.println("h metszet: " + h.getB());
-        if (e.getIntersection(f).length > 1) {
-            System.out.println("e és f metszéspontja: (" + e.getIntersection(f)[0] + "; " + e.getIntersection(f)[1] + ")");
-            System.out.println("hajlásszöge: " + e.getPitchAngle(f) * 180 / Math.PI);
-        } else {
-            System.out.println("e és f nem metsz.");
-        }
-        if (f.getIntersection(g).length > 1) {
-            System.out.println("f és g metszéspontja: (" + f.getIntersection(g)[0] + "; " + f.getIntersection(g)[1] + ")");
-            System.out.println("hajlásszöge: " + f.getPitchAngle(g) * 180 / Math.PI);
-        } else {
-            System.out.println("f és g nem metsz.");
-        }
-        if (e.getIntersection(g).length > 1) {
-            System.out.println("e és g metszéspontja: (" + e.getIntersection(g)[0] + "; " + e.getIntersection(g)[1] + ")");
-            System.out.println("hajlásszöge: " + e.getPitchAngle(g) * 180 / Math.PI);
-        } else {
-            System.out.println("e és g nem metsz.");
-        }
-        if (e.getIntersection(h).length > 1) {
-            System.out.println("e és h metszéspontja: (" + e.getIntersection(h)[0] + "; " + e.getIntersection(h)[1] + ")");
-            System.out.println("hajlásszöge: " + e.getPitchAngle(h) * 180 / Math.PI);
-        } else {
-            System.out.println("e és h nem metsz.");
-        }
-        if (f.getIntersection(h).length > 1) {
-            System.out.println("f és h metszéspontja: (" + f.getIntersection(h)[0] + "; " + f.getIntersection(h)[1] + ")");
-            System.out.println("hajlásszöge: " + f.getPitchAngle(h) * 180 / Math.PI);
-        } else {
-            System.out.println("f és h nem metsz.");
-        }
-        if (h.getIntersection(g).length > 1) {
-            System.out.println("h és g metszéspontja: (" + h.getIntersection(g)[0] + "; " + h.getIntersection(g)[1] + ")");
-            System.out.println("hajlásszöge: " + h.getPitchAngle(g) * 180 / Math.PI);
-        } else {
-            System.out.println("h és g nem metsz.");
-        }
-        if (j.getIntersection(f).length > 1) {
-            System.out.println("j és f metszéspontja: (" + j.getIntersection(f)[0] + "; " + j.getIntersection(f)[1] + ")");
-            System.out.println("hajlásszöge: " + j.getPitchAngle(f) * 180 / Math.PI);
-        } else {
-            System.out.println("j és f nem metsz.");
-        }
-        System.out.println("e normál vektor: " + e.getNormalVector()[0] + "," + +e.getNormalVector()[1]);
-        System.out.println("f normál vektor: " + f.getNormalVector()[0] + "," + +f.getNormalVector()[1]);
-        System.out.println("g normál vektor: " + g.getNormalVector()[0] + "," + +g.getNormalVector()[1]);
-        System.out.println("h normál vektor: " + h.getNormalVector()[0] + "," + +h.getNormalVector()[1]);
-        System.out.println("j normál vektor: " + j.getNormalVector()[0] + "," + +j.getNormalVector()[1]);
-        System.out.println("e irány vektor: " + e.getDirectionVector()[0] + "," + +e.getDirectionVector()[1]);
-        System.out.println("f irány vektor: " + f.getDirectionVector()[0] + "," + +f.getDirectionVector()[1]);
-        System.out.println("g irány vektor: " + g.getDirectionVector()[0] + "," + +g.getDirectionVector()[1]);
-        System.out.println("h irány vektor: " + h.getDirectionVector()[0] + "," + +h.getDirectionVector()[1]);
-        System.out.println("j irány vektor: " + j.getDirectionVector()[0] + "," + +j.getDirectionVector()[1]);
     }
 }

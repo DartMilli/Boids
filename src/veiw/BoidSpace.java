@@ -28,7 +28,7 @@ import model.BoidVelocity;
  */
 public class BoidSpace extends JPanel {
 
-    private static int BOIDSIZE = 6;
+    private static int boidSize = 6;
     private BoidModel model;
     private static int step = 0;
     private int stepBefore = 0;
@@ -37,7 +37,7 @@ public class BoidSpace extends JPanel {
     private boolean showNeighbourhoodDistance = false;
     private boolean showIndexes = false;
     private boolean showTrajectory = false;
-    private static int BOIDTYPE = 0;
+    private static int boidType = 0;
     private StringMenu menu;
     private int activeMenuSession = 0;
     private int activeMenu;
@@ -102,7 +102,7 @@ public class BoidSpace extends JPanel {
     }
 
     public static void setBoidType(int type) {
-        BoidSpace.BOIDTYPE = type;
+        BoidSpace.boidType = type;
     }
 
     public void setTimeFrame(int frame) {
@@ -155,7 +155,7 @@ public class BoidSpace extends JPanel {
     }
 
     public int getBoidType() {
-        return BOIDTYPE;
+        return boidType;
     }
 
     public int getFps() {
@@ -223,22 +223,22 @@ public class BoidSpace extends JPanel {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Courier New", Font.PLAIN, 12));
             g.drawString(b.getBoidIndex() + "",
-                    (int) b.getActualPosition().getX() - BOIDSIZE,
-                    (int) b.getActualPosition().getY() - BOIDSIZE
+                    (int) b.getActualPosition().getX() - boidSize,
+                    (int) b.getActualPosition().getY() - boidSize
             );
         }
     }
 
     public static void drawBoidToMap(Graphics g, Boid b, Point2D.Double position, Color c) {
-        if (BOIDTYPE == 0) {
+        if (boidType == 0) {
             g.setColor(c);
-            g.fillOval((int) position.getX() - BOIDSIZE,
-                    (int) position.getY() - BOIDSIZE,
-                    2 * BOIDSIZE,
-                    2 * BOIDSIZE
+            g.fillOval((int) position.getX() - boidSize,
+                    (int) position.getY() - boidSize,
+                    2 * boidSize,
+                    2 * boidSize
             );
         }
-        drawBoid(g, b.getVelocity(), 4, position, c, BOIDTYPE);
+        drawBoid(g, b.getVelocity(), 4, position, c, boidType);
     }
 
     private void drawTrajecotry(Graphics g, Boid b, Color c) {

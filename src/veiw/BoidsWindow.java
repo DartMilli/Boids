@@ -25,7 +25,7 @@ public class BoidsWindow extends JFrame {
                 GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize()
         );
         setSize(new Dimension(dmsn));
-        setTitle("Boids 1.3_beta");
+        setTitle("Boids 1.3.0.1");
         setLayout(null);
         setResizable(false);
         int margin = 0;

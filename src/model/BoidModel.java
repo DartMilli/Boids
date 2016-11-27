@@ -16,9 +16,9 @@ public class BoidModel {
     private Map map;
     private double neighbourDistance = 100.0;
     private double privateDistance = 50.0;
-    private double rule_1_factor = 1.0;
-    private double rule_2_factor = 1.0;
-    private double rule_3_factor = 1.0;
+    private double rule1Factor = 1.0;
+    private double rule2Factor = 1.0;
+    private double rule3Factor = 1.0;
     private double windSpeed = 0.0;
     private double windDirection = -Math.PI;
     private int population = 0;
@@ -124,15 +124,15 @@ public class BoidModel {
     }
 
     public double getMassRuleFactor() {
-        return rule_1_factor;
+        return rule1Factor;
     }
 
     public double getDistanceRuleFactor() {
-        return rule_2_factor;
+        return rule2Factor;
     }
 
     public double getVelocityRuleFactor() {
-        return rule_3_factor;
+        return rule3Factor;
     }
 
     public boolean isRulesOn() {
@@ -220,31 +220,31 @@ public class BoidModel {
 
     public void setRule1(double r1f) {
         if (r1f > 1.0) {
-            rule_1_factor = 1.0;
+            rule1Factor = 1.0;
         } else if (r1f < 0.0) {
-            rule_1_factor = 0.0;
+            rule1Factor = 0.0;
         } else {
-            rule_1_factor = r1f;
+            rule1Factor = r1f;
         }
     }
 
     public void setRule2(double r2f) {
         if (r2f > 1.0) {
-            rule_2_factor = 1.0;
+            rule2Factor = 1.0;
         } else if (r2f < 0.0) {
-            rule_2_factor = 0.0;
+            rule2Factor = 0.0;
         } else {
-            rule_2_factor = r2f;
+            rule2Factor = r2f;
         }
     }
 
     public void setRule3(double r3f) {
         if (r3f > 1.0) {
-            rule_3_factor = 1.0;
+            rule3Factor = 1.0;
         } else if (r3f < 0.0) {
-            rule_3_factor = 0.0;
+            rule3Factor = 0.0;
         } else {
-            rule_3_factor = r3f;
+            rule3Factor = r3f;
         }
     }
 
@@ -323,12 +323,12 @@ public class BoidModel {
         for (int i = 0; i < boids.size(); i++) {
             b = boids.get(i);
             int[] neighbourhood = getBoidNeighborhood(b);
-            newVelocity[0] = rule1_mass(b, neighbourhood);
-            newVelocity[1] = rule2_distance(b, neighbourhood);
-            newVelocity[2] = rule3_velocities(b, neighbourhood);
-            newVelocity[3] = rule4_wind(windSpeed, windDirection);
-            newVelocity[4] = rule5_object(b);
-            newVelocity[5] = rule6_mouse(b);
+            newVelocity[0] = rule1Mass(b, neighbourhood);
+            newVelocity[1] = rule2Distance(b, neighbourhood);
+            newVelocity[2] = rule3Velocities(b, neighbourhood);
+            newVelocity[3] = rule4Wind(windSpeed, windDirection);
+            newVelocity[4] = rule5Object(b);
+            newVelocity[5] = rule6Mouse(b);
             b.setVelocity(newVelocity);
             b.fly();
         }
@@ -369,7 +369,7 @@ public class BoidModel {
         return out;
     }
 
-    private BoidVelocity rule1_mass(Boid b, int[] neighbours) {
+    private BoidVelocity rule1Mass(Boid b, int[] neighbours) {
         double x = b.getActualPosition().getX();
         double y = b.getActualPosition().getY();
         double mass, sMass, factor;
@@ -380,8 +380,8 @@ public class BoidModel {
         factor = mass / sMass;
         for (int i = 0; i < neighbours.length; i++) {
             neighbour = boids.get(neighbours[i]);
-            x = (factor * x + (1 - factor) * neighbour.getActualPosition().getX());
-            y = (factor * y + (1 - factor) * neighbour.getActualPosition().getY());
+            x = factor * x + (1 - factor) * neighbour.getActualPosition().getX();
+            y = factor * y + (1 - factor) * neighbour.getActualPosition().getY();
         }
         double vx, vy;
         vx = x - b.getActualPosition().getX();
@@ -389,12 +389,12 @@ public class BoidModel {
         out.setKoordinates(vx, vy);
         double fi, length;
         fi = out.getFi();
-        length = out.getLength() * rule_1_factor;
+        length = out.getLength() * rule1Factor;
         out.setPolarKoordinates(fi, length);
         return out;
     }
 
-    private BoidVelocity rule2_distance(Boid b, int[] neighbours) {
+    private BoidVelocity rule2Distance(Boid b, int[] neighbours) {
         Boid neighbour;
         double distance, vx = 0, vy = 0, pieces = 0;
 
@@ -423,16 +423,14 @@ public class BoidModel {
         }
         double fi, length;
         fi = out.getFi();
-        length = out.getLength() * rule_2_factor;
+        length = out.getLength() * rule2Factor;
         out.setPolarKoordinates(fi, length);
         return out;
     }
 
-    private BoidVelocity rule3_velocities(Boid b, int[] neighbours) {
+    private BoidVelocity rule3Velocities(Boid b, int[] neighbours) {
         BoidVelocity out = new BoidVelocity();
         Boid neighbour;
-//        double vx = b.getVelocity().getxValue();
-//        double vy = b.getVelocity().getyValue();
         double vx = 0, vy = 0, pieces = 0, fi, length;
         for (int i = 0; i < neighbours.length; i++) {
             neighbour = boids.get(neighbours[i]);
@@ -448,18 +446,18 @@ public class BoidModel {
         }
         out.setKoordinates(vx, vy);
         fi = out.getFi();
-        length = out.getLength() * rule_3_factor;
+        length = out.getLength() * rule3Factor;
         out.setPolarKoordinates(fi, length);
         return out;
     }
 
-    private BoidVelocity rule4_wind(double speed, double direction) {
+    private BoidVelocity rule4Wind(double speed, double direction) {
         BoidVelocity out = new BoidVelocity();
         out.setPolarKoordinates(direction, speed);
         return out;
     }
 
-    private BoidVelocity rule5_object(Boid b) {
+    private BoidVelocity rule5Object(Boid b) {
         BoidVelocity out = new BoidVelocity();
         double fi, length;
         if (objectSession > 0 && objectPosition != null) {
@@ -478,7 +476,7 @@ public class BoidModel {
         return out;
     }
 
-    private BoidVelocity rule6_mouse(Boid b) {
+    private BoidVelocity rule6Mouse(Boid b) {
         BoidVelocity out = new BoidVelocity();
         double fi, length;
         if (mousePosition != null) {
@@ -499,5 +497,4 @@ public class BoidModel {
         }
         return out;
     }
-
 }

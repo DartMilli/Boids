@@ -12,25 +12,25 @@ import java.util.ArrayList;
 public class Map {
 
     private Dimension dmsn;
-    private Rectangle map;
+    private Rectangle mapRect;
     private ArrayList<Straight> walls;
     private boolean infinity;
 
     public Map(Dimension dmsn, boolean infinity) {
         this.dmsn = dmsn;
-        map = new Rectangle(dmsn);
+        mapRect = new Rectangle(dmsn);
         walls = new ArrayList();
         this.infinity = infinity;
     }
 
     public void addWall(Straight wall) {
-        if (map.contains(wall.getP1()) && map.contains(wall.getP2())) {
+        if (mapRect.contains(wall.getP1()) && mapRect.contains(wall.getP2())) {
             walls.add(wall);
         }
     }
 
     public void removeWall() {
-        if (walls.size() > 0) {
+        if (!walls.isEmpty()) {
             walls.remove(walls.size() - 1);
         }
     }
@@ -82,7 +82,7 @@ public class Map {
     }
 
     public Rectangle getMapRect() {
-        return map;
+        return mapRect;
     }
 
     public boolean isInfinit() {

@@ -27,8 +27,8 @@ public class BoidVeiwer extends JPanel {
         }
     });
 
-    public BoidVeiwer(Boid Boid, Dimension dmsn, boolean isInMenu) {
-        this.boid = Boid;
+    public BoidVeiwer(Boid boid, Dimension dmsn, boolean isInMenu) {
+        this.boid = boid;
         this.setPreferredSize(dmsn);
         if (isInMenu) {
             timer.start();
